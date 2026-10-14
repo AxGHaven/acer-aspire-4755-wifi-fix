@@ -1,0 +1,15 @@
+[Unit]
+Description=Enable verified Acer Aspire 4755 WLAN EC control
+Requires=NetworkManager.service
+After=NetworkManager.service systemd-rfkill.service
+RequiresMountsFor=/sys/kernel/debug
+ConditionPathExists=/sys/class/dmi/id/product_name
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python /usr/local/libexec/acer-wlan-enable.py
+TimeoutStartSec=90
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
